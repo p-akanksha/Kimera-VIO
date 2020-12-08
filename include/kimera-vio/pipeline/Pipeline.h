@@ -72,6 +72,11 @@ class Pipeline {
     CHECK(right_frame);
     data_provider_module_->fillRightFrameQueue(std::move(right_frame));
   }
+  inline void fillBoundingBoxQueue(BoundingBox::UniquePtr bb) {
+    CHECK(data_provider_module_);
+    CHECK(bb);
+    data_provider_module_->fillBoundingBoxQueue(std::move(bb));
+  }
   //! Callbacks to fill queues but they block if queues are getting full.
   //! Useful when parsing datasets, don't use with real sensors.
   inline void fillLeftFrameQueueBlockingIfFull(Frame::UniquePtr left_frame) {

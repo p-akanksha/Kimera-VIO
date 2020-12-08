@@ -68,6 +68,10 @@ class DataProviderModule
     CHECK(right_frame);
     right_frame_queue_.push(std::move(right_frame));
   }
+  inline void fillBoundingBoxQueue(BoundingBox::UniquePtr bb) {
+    CHECK(bb);
+    bounding_box_queue_.push(std::move(bb));
+  }
   //! Callbacks to fill queues but they block if queues are getting full.
   //! Blocking call in case you want to avoid overfilling the input queues.
   //! This is useful when parsing datasets files, since parsing is much faster
@@ -120,6 +124,7 @@ class DataProviderModule
   ImuData imu_data_;
   ThreadsafeQueue<Frame::UniquePtr> left_frame_queue_;
   ThreadsafeQueue<Frame::UniquePtr> right_frame_queue_;
+  ThreadsafeQueue<BoundingBox::UniquePtr> bounding_box_queue_;
   const Timestamp kNoFrameYet = 0;
   Timestamp timestamp_last_frame_;
   // TODO(Toni): remove these below

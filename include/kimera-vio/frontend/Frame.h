@@ -40,6 +40,34 @@
 
 namespace VIO {
 
+using BBId = std::uint64_t;
+
+class BoundingBox : public PipelinePayload {
+ public:
+  // TODO(Toni): do it please.
+  // KIMERA_DELETE_COPY_CONSTRUCTORS(Frame);
+  KIMERA_POINTER_TYPEDEFS(BoundingBox);
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
+  // Constructors.
+  /// @param img: does a shallow copy of the image by defaults,
+  ///  if Frame should have ownership of the image, clone it.
+  BoundingBox(const BBId& bb,
+        const Timestamp& timestamp)
+      : PipelinePayload(timestamp),
+        id_(bb){}
+
+  /* ------------------------------------------------------------------------ */
+  void print() const {
+    LOG(INFO) << "BoundingBox id: " << id_ << " at timestamp: " << timestamp_ << "\n";
+  }
+
+  /* ------------------------------------------------------------------------ */
+
+ public:
+  const BBId id_;
+};
+
 ////////////////////////////////////////////////////////////////////////////
 // Class for storing/processing a single image
 class Frame : public PipelinePayload {

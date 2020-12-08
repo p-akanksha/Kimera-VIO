@@ -34,6 +34,7 @@ class DataProviderInterface {
   typedef std::function<void(const ImuMeasurement&)> ImuSingleInputCallback;
   typedef std::function<void(const ImuMeasurements&)> ImuMultiInputCallback;
   typedef std::function<void(Frame::UniquePtr)> FrameInputCallback;
+  typedef std::function<void(BoundingBox::UniquePtr)> BoundingBoxInputCallback;
 
   DataProviderInterface();
   virtual ~DataProviderInterface();
@@ -73,6 +74,9 @@ class DataProviderInterface {
   inline void registerRightFrameCallback(const FrameInputCallback& callback) {
     right_frame_callback_ = callback;
   }
+  inline void registerBoundingBoxCallback(const BoundingBoxInputCallback& callback) {
+    boundingbox_callback_ = callback;
+  }
 
  protected:
   // Vio callbacks. These functions should be called once data is available for
@@ -81,6 +85,7 @@ class DataProviderInterface {
   ImuMultiInputCallback imu_multi_callback_;
   FrameInputCallback left_frame_callback_;
   FrameInputCallback right_frame_callback_;
+  BoundingBoxInputCallback boundingbox_callback_;
 
   // Shutdown switch to stop data provider.
   std::atomic_bool shutdown_ = {false};
